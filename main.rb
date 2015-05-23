@@ -3,7 +3,7 @@ require 'sinatra'
 
 use Rack::Session::Cookie, :key => 'rack.session',
                            :path => '/',
-                           :secret => 'EMONxOaBkbMCNT2I5aAoHBlbsfSMnZ'
+                           :secret => 'my_secret'
 
 
 
