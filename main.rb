@@ -1,6 +1,5 @@
 require "rubygems"
 require "sinatra"
-require "pry"
 
 use Rack::Session::Cookie, key:     "rack.session",
                            path:    "/",
@@ -99,7 +98,7 @@ post "/game/player/hit" do
     @success = "You hit Blackjack!"
     @show_hit_or_stay_buttons = false
   elsif player_total > 21
-    @error = "Sorry, you busted"
+    @error = "You busted, dealer wins!"
     @show_hit_or_stay_buttons = false
   end
 
@@ -109,6 +108,45 @@ end
 post "/game/player/stay" do
   @success = "You chose to stay"
   @show_hit_or_stay_buttons = false
+  redirect "/game/dealer"
+end
+
+get "/game/dealer" do
+  @show_hit_or_stay_buttons = false
+
+  dealer_total =  calculate_total(session[:dealer_cards])
+
+  if dealer_total == 21
+    @error = "Dealer hit Blackjack!"
+  elsif dealer_total > 21
+    @success = "Dealer busted!"
+  elsif dealer_total >= 17
+    redirect "/game/compare"
+  else
+    @show_dealer_hit_button = true
+  end
+
   erb :game
 end
 
+post "/game/dealer/hit" do
+  session[:dealer_cards] << session[:deck].pop
+  redirect "/game/dealer"
+end
+
+get "/game/compare" do
+  @show_hit_or_stay_buttons = false
+
+  player_total = calculate_total(session[:player_cards])
+  dealer_total = calculate_total(session[:dealer_cards])
+
+  if player_total < dealer_total
+    @error = "Dealer wins!"
+  elsif player_total > dealer_total
+    @success = "You win!"
+  else
+    @success = "It's a tie!"
+  end
+
+  erb :game
+end
