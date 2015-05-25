@@ -16,4 +16,15 @@ Your cards are:
   <% end %>
 </ul>
 
-Your total is <%= calculate_total(session[:player_cards]) %>
+<p>Your total is <%= calculate_total(session[:player_cards]) %></p>
+
+<% if @show_hit_or_stay_buttons %>
+  <p>What would you like to do?</p>
+  <form action="/game/player/hit" method="post">
+    <input type="submit" class="btn" value="Hit">
+  </form>
+
+  <form action="/game/player/stay" method="post">
+    <input type="submit" class="btn" value="Stay">
+  </form>
+<% end %>
