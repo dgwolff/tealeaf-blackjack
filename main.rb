@@ -123,7 +123,7 @@ post "/game/player/hit" do
     loser!("You busted, dealer wins!")
   end
 
-  erb :game
+  erb :game, layout: false
 end
 
 post "/game/player/stay" do
