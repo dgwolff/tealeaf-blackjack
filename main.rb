@@ -106,7 +106,7 @@ get "/bet" do
 end
 
 post "/bet" do
-  if params[:bet_amount].nil? || params[:player_bet].to_i == 0
+  if params[:player_bet].nil? || params[:player_bet].to_i == 0
     @error = "Must make a bet"
     halt erb(:bet)
   elsif params[:player_bet].to_i > session[:player_pot]
