@@ -1,4 +1,9 @@
 <div id="game">
+  <% if @winner %>
+    <div class="alert alert-success"><%=@winner%></div>
+  <% elsif @loser %>
+    <div class="alert alert-error"><%=@loser%></div>
+  <% end %>
 
   <h1>Blackjack!</h1>
 

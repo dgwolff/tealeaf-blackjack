@@ -15,7 +15,7 @@ helpers do
 
     total = 0
     arr.each do |value|
-      if value == "Ace"
+      if value == "A"
         total += 11
       elsif value.to_i == 0
         total += 10
@@ -24,7 +24,7 @@ helpers do
       end
     end
 
-    arr.select { |e| e == "Ace" }.count.times do
+    arr.select { |e| e == "A" }.count.times do
       total -= 10 if total > BLACKJACK_AMOUNT
     end
 
@@ -57,20 +57,20 @@ def winner!(msg)
   @play_again = true
   @show_hit_or_stay_buttons = false
   session[:player_pot] = session[:player_pot] + session[:player_bet]
-  @success = "<strong>You win!</strong> #{msg}"
+  @winner = "<strong>You win!</strong> #{msg}"
 end
 
 def loser!(msg)
   @play_again = true
   @show_hit_or_stay_buttons = false
   session[:player_pot] = session[:player_pot] - session[:player_bet]
-  @error = "<strong>Dealer wins!</strong> #{msg}"
+  @loser = "<strong>Dealer wins!</strong> #{msg}"
 end
 
 def tie!(msg)
   @play_again = true
   @show_hit_or_stay_buttons = false
-  @success = "<strong>It's a tie!</strong> #{msg}"
+  @winner = "<strong>It's a tie!</strong> #{msg}"
 end
 
 before do
@@ -192,7 +192,7 @@ get "/game/compare" do
     tie!("You and the dealer both stayed at #{player_total}")
   end
 
-  erb :game
+  erb :game, layout: false
 end
 
 get '/game_over' do
