@@ -56,14 +56,14 @@ end
 def winner!(msg)
   @play_again = true
   @show_hit_or_stay_buttons = false
-  session[:player_pot] = session[:player_pot] + session[:bet_amount]
+  session[:player_pot] = session[:player_pot] + session[:player_bet]
   @success = "<strong>You win!</strong> #{msg}"
 end
 
 def loser!(msg)
   @play_again = true
   @show_hit_or_stay_buttons = false
-  session[:player_pot] = session[:player_pot] - session[:bet_amount]
+  session[:player_pot] = session[:player_pot] - session[:player_bet]
   @error = "<strong>Dealer wins!</strong> #{msg}"
 end
 
